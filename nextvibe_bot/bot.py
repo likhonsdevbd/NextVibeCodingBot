@@ -20,6 +20,7 @@ from telegram.constants import ParseMode
 from .config import settings
 from .handlers.command_handlers import start_handler, help_handler, error_handler
 from .handlers.message_handler import message_handler_func as message_handler
+from .handlers import callback_handlers
 
 
 class NextVibeBot:
@@ -81,10 +82,15 @@ class NextVibeBot:
         self.application.add_handler(CommandHandler("help", help_handler))
         self.application.add_handler(CommandHandler("cancel", self._cancel_handler))
         
-        # Message handlers
+        # Message handlers - handle text, voice and other message types in a single handler
+        # Using a broad filter so we can branch on the message content inside the handler
         self.application.add_handler(
-            MessageHandler(filters.TEXT & ~filters.COMMAND, message_handler)
+            MessageHandler(filters.ALL & ~filters.COMMAND, message_handler)
         )
+        
+        # Callback query handlers
+        for handler in callback_handlers:
+            self.application.add_handler(handler)
         
         # Error handler
         self.application.add_error_handler(error_handler)
