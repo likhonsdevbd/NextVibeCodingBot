@@ -17,9 +17,14 @@ class Settings(BaseSettings):
     # AI Service Configuration
     openai_api_key: Optional[str] = Field(default=None, env="OPENAI_API_KEY")
     anthropic_api_key: Optional[str] = Field(default=None, env="ANTHROPIC_API_KEY")
+    e2b_api_key: Optional[str] = Field(default=None, env="E2B_API_KEY")
     
     # Database Configuration
-    database_url: str = Field(default="sqlite:///./nextvibe_bot.db", env="DATABASE_URL")
+    database_url: str = Field(env="DATABASE_URL")
+    pg_host: str = Field(env="PGHOST")
+    pg_user: str = Field(env="PGUSER")
+    pg_database: str = Field(env="PGDATABASE")
+    pg_password: str = Field(env="PGPASSWORD")
     
     # Redis Configuration
     redis_url: str = Field(default="redis://localhost:6379/0", env="REDIS_URL")
