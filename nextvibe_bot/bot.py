@@ -18,12 +18,8 @@ from telegram.ext import (
 from telegram.constants import ParseMode
 
 from .config import settings
-from .handlers import (
-    start_handler, 
-    help_handler, 
-    message_handler,
-    error_handler
-)
+from .handlers.command_handlers import start_handler, help_handler, error_handler
+from .handlers.message_handler import message_handler_func as message_handler
 
 
 class NextVibeBot:
@@ -145,7 +141,7 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        print("\\nBot stopped by user")
+        print("\nBot stopped by user")
         sys.exit(0)
     except Exception as e:
         print(f"Bot failed to start: {e}")
