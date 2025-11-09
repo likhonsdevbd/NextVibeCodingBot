@@ -17,6 +17,8 @@ class Settings(BaseSettings):
     # AI Service Configuration
     openai_api_key: Optional[str] = Field(default=None, env="OPENAI_API_KEY")
     anthropic_api_key: Optional[str] = Field(default=None, env="ANTHROPIC_API_KEY")
+    minimax_api_key: Optional[str] = Field(default=None, env="MINIMAX_API_KEY")
+    minimax_base_url: str = Field(default="https://api.minimax.io/v1", env="MINIMAX_BASE_URL")
     e2b_api_key: Optional[str] = Field(default=None, env="E2B_API_KEY")
     
     # Database Configuration

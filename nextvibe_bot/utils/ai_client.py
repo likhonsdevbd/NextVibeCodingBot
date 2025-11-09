@@ -20,8 +20,11 @@ class AIClient:
     def __init__(self):
         self.openai_api_key = settings.openai_api_key
         self.anthropic_api_key = settings.anthropic_api_key
+        self.minimax_api_key = settings.minimax_api_key
+        self.minimax_base_url = settings.minimax_base_url
         self._openai_client = None
         self._anthropic_client = None
+        self._minimax_client = None
         
     async def generate_response(self, prompt: str) -> Dict[str, Any]:
         """
@@ -41,6 +44,12 @@ class AIClient:
                 return await self._generate_anthropic_response(prompt)
             except Exception as e:
                 logger.warning(f"Anthropic API failed: {e}")
+                
+        if self.minimax_api_key:
+            try:
+                return await self._generate_minimax_response(prompt)
+            except Exception as e:
+                logger.warning(f"MiniMax API failed: {e}")
                 
         if self.openai_api_key:
             try:
@@ -81,6 +90,51 @@ class AIClient:
             
         except Exception as e:
             logger.error(f"Anthropic API error: {e}")
+            raise
+            
+    async def _generate_minimax_response(self, prompt: str) -> Dict[str, Any]:
+        """Generate response using MiniMax via OpenAI SDK"""
+        
+        try:
+            from openai import OpenAI
+            
+            # Create client if not exists
+            if not self._minimax_client:
+                self._minimax_client = OpenAI(
+                    base_url=self.minimax_base_url,
+                    api_key=self.minimax_api_key
+                )
+            
+            # Send request
+            response = self._minimax_client.chat.completions.create(
+                model="MiniMax-M2",
+                messages=[
+                    {
+                        "role": "system", 
+                        "content": "You are a helpful AI coding assistant."
+                    },
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ],
+                extra_body={"reasoning_split": True},
+                temperature=1.0
+            )
+            
+            # Get thinking process and response content
+            thinking = response.choices[0].message.reasoning_details[0]['text'] if response.choices[0].message.reasoning_details else ""
+            content = response.choices[0].message.content
+            
+            return {
+                "content": content,
+                "thinking": thinking,
+                "model": "minimax-m2",
+                "usage": getattr(response, 'usage', {})
+            }
+            
+        except Exception as e:
+            logger.error(f"MiniMax API error: {e}")
             raise
             
     async def _generate_openai_response(self, prompt: str) -> Dict[str, Any]:

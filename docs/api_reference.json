@@ -1,0 +1,729 @@
+{
+  "api_version": "9.2",
+  "generated_at": "2025-11-09T14:19:14.140Z",
+  "description": "NextVibeBot Telegram API Method Reference",
+  "total_methods": 24,
+  "modules": {
+    "messages": {
+      "name": "Message Operations",
+      "description": "Methods for sending, editing, and managing messages",
+      "methods": {
+        "sendMessage": {
+          "friendly_name": "send_message",
+          "description": "Send a text message to a chat",
+          "parameters": {
+            "chat_id": {
+              "type": "Union[int, str]",
+              "required": true,
+              "description": "Unique identifier for the target chat"
+            },
+            "text": {
+              "type": "str",
+              "required": true,
+              "description": "Text of the message to be sent"
+            },
+            "parse_mode": {
+              "type": "ParseModeType",
+              "required": false,
+              "description": "Mode for parsing entities in the message text"
+            },
+            "disable_web_page_preview": {
+              "type": "bool",
+              "required": false,
+              "description": "Disables link previews for links in this message"
+            },
+            "disable_notification": {
+              "type": "bool",
+              "required": false,
+              "description": "Sends the message silently"
+            },
+            "protect_content": {
+              "type": "bool",
+              "required": false,
+              "description": "Protects the contents of the sent message"
+            },
+            "reply_to_message_id": {
+              "type": "int",
+              "required": false,
+              "description": "If the message is a reply, ID of the original message"
+            },
+            "allow_sending_without_reply": {
+              "type": "bool",
+              "required": false,
+              "description": "Pass True to allow sending message without reply"
+            },
+            "reply_markup": {
+              "type": "Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ForceReply, ReplyKeyboardRemove]",
+              "required": false,
+              "description": "Additional interface options for the message"
+            },
+            "link_preview_options": {
+              "type": "LinkPreviewOptions",
+              "required": false,
+              "description": "Link preview options for links in the message"
+            },
+            "message_effect_id": {
+              "type": "str",
+              "required": false,
+              "description": "Effect to show when user receives the message"
+            }
+          },
+          "returns": {
+            "type": "RequestResult",
+            "description": "Contains Message object on success"
+          },
+          "examples": [
+            {
+              "description": "Send simple message",
+              "code": "result = await client.messages.send_message(chat_id='@username', text='Hello World!')"
+            },
+            {
+              "description": "Send message with keyboard",
+              "code": "keyboard = InlineKeyboardMarkup([[InlineKeyboardButton('Click me', callback_data='click')]])\nresult = await client.messages.send_message(chat_id=123, text='Choose option:', reply_markup=keyboard)"
+            }
+          ]
+        },
+        "editMessageText": {
+          "friendly_name": "edit_message_text",
+          "description": "Edit text and game messages",
+          "parameters": {
+            "chat_id": {
+              "type": "Optional[Union[int, str]]",
+              "required": false,
+              "description": "Required if inline_message_id is not specified"
+            },
+            "message_id": {
+              "type": "Optional[int]",
+              "required": false,
+              "description": "Required if inline_message_id is not specified"
+            },
+            "inline_message_id": {
+              "type": "Optional[str]",
+              "required": false,
+              "description": "Required if chat_id and message_id are not specified"
+            },
+            "text": {
+              "type": "str",
+              "required": true,
+              "description": "New text of the message"
+            },
+            "parse_mode": {
+              "type": "Optional[ParseModeType]",
+              "required": false,
+              "description": "Mode for parsing entities"
+            },
+            "disable_web_page_preview": {
+              "type": "Optional[bool]",
+              "required": false,
+              "description": "Disables link previews"
+            },
+            "reply_markup": {
+              "type": "Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ForceReply, ReplyKeyboardRemove]]",
+              "required": false,
+              "description": "Additional interface options"
+            }
+          },
+          "returns": {
+            "type": "RequestResult",
+            "description": "Contains edited Message object on success"
+          },
+          "examples": [
+            {
+              "description": "Edit regular message",
+              "code": "result = await client.messages.edit_message_text(chat_id=123, message_id=456, text='Updated text')"
+            },
+            {
+              "description": "Edit inline message",
+              "code": "result = await client.messages.edit_message_text(inline_message_id='id123', text='Updated inline text')"
+            }
+          ]
+        },
+        "deleteMessage": {
+          "friendly_name": "delete_message",
+          "description": "Delete a message",
+          "parameters": {
+            "chat_id": {
+              "type": "Union[int, str]",
+              "required": true,
+              "description": "Unique identifier for the target chat"
+            },
+            "message_id": {
+              "type": "int",
+              "required": true,
+              "description": "Identifier of the message to delete"
+            }
+          },
+          "returns": {
+            "type": "RequestResult",
+            "description": "Success status"
+          },
+          "examples": [
+            {
+              "description": "Delete a message",
+              "code": "result = await client.messages.delete_message(chat_id=123, message_id=456)"
+            }
+          ]
+        },
+        "sendPhoto": {
+          "friendly_name": "send_photo",
+          "description": "Send photos",
+          "parameters": {
+            "chat_id": {
+              "type": "Union[int, str]",
+              "required": true,
+              "description": "Unique identifier for the target chat"
+            },
+            "photo": {
+              "type": "Union[str, InputFile]",
+              "required": true,
+              "description": "Photo to send"
+            },
+            "caption": {
+              "type": "Optional[str]",
+              "required": false,
+              "description": "Photo caption"
+            },
+            "parse_mode": {
+              "type": "Optional[ParseModeType]",
+              "required": false,
+              "description": "Mode for parsing entities in the caption"
+            },
+            "disable_notification": {
+              "type": "Optional[bool]",
+              "required": false,
+              "description": "Sends the message silently"
+            },
+            "protect_content": {
+              "type": "Optional[bool]",
+              "required": false,
+              "description": "Protects the contents of the sent message"
+            },
+            "reply_to_message_id": {
+              "type": "Optional[int]",
+              "required": false,
+              "description": "If the message is a reply, ID of the original message"
+            },
+            "reply_markup": {
+              "type": "Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ForceReply, ReplyKeyboardRemove]]",
+              "required": false,
+              "description": "Additional interface options"
+            }
+          },
+          "returns": {
+            "type": "RequestResult",
+            "description": "Contains Message object on success"
+          },
+          "examples": [
+            {
+              "description": "Send photo from file path",
+              "code": "result = await client.messages.send_photo(chat_id=123, photo='path/to/image.jpg', caption='Check this out!')"
+            }
+          ]
+        },
+        "sendVoice": {
+          "friendly_name": "send_voice",
+          "description": "Send voice messages",
+          "parameters": {
+            "chat_id": {
+              "type": "Union[int, str]",
+              "required": true,
+              "description": "Unique identifier for the target chat"
+            },
+            "voice": {
+              "type": "Union[str, InputFile]",
+              "required": true,
+              "description": "Audio file to send"
+            },
+            "caption": {
+              "type": "Optional[str]",
+              "required": false,
+              "description": "Voice message caption"
+            },
+            "parse_mode": {
+              "type": "Optional[ParseModeType]",
+              "required": false,
+              "description": "Mode for parsing entities in the caption"
+            },
+            "duration": {
+              "type": "Optional[int]",
+              "required": false,
+              "description": "Duration of the voice message in seconds"
+            },
+            "disable_notification": {
+              "type": "Optional[bool]",
+              "required": false,
+              "description": "Sends the message silently"
+            },
+            "protect_content": {
+              "type": "Optional[bool]",
+              "required": false,
+              "description": "Protects the contents of the sent message"
+            },
+            "reply_to_message_id": {
+              "type": "Optional[int]",
+              "required": false,
+              "description": "If the message is a reply, ID of the original message"
+            },
+            "reply_markup": {
+              "type": "Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ForceReply, ReplyKeyboardRemove]]",
+              "required": false,
+              "description": "Additional interface options"
+            }
+          },
+          "returns": {
+            "type": "RequestResult",
+            "description": "Contains Message object on success"
+          },
+          "examples": [
+            {
+              "description": "Send voice message",
+              "code": "result = await client.messages.send_voice(chat_id=123, voice='path/to/audio.ogg', caption='Voice note')"
+            }
+          ]
+        },
+        "sendDocument": {
+          "friendly_name": "send_document",
+          "description": "Send general files",
+          "parameters": {
+            "chat_id": {
+              "type": "Union[int, str]",
+              "required": true,
+              "description": "Unique identifier for the target chat"
+            },
+            "document": {
+              "type": "Union[str, InputFile]",
+              "required": true,
+              "description": "File to send"
+            },
+            "caption": {
+              "type": "Optional[str]",
+              "required": false,
+              "description": "Document caption"
+            },
+            "parse_mode": {
+              "type": "Optional[ParseModeType]",
+              "required": false,
+              "description": "Mode for parsing entities in the caption"
+            },
+            "disable_notification": {
+              "type": "Optional[bool]",
+              "required": false,
+              "description": "Sends the message silently"
+            },
+            "protect_content": {
+              "type": "Optional[bool]",
+              "required": false,
+              "description": "Protects the contents of the sent message"
+            },
+            "reply_to_message_id": {
+              "type": "Optional[int]",
+              "required": false,
+              "description": "If the message is a reply, ID of the original message"
+            },
+            "reply_markup": {
+              "type": "Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ForceReply, ReplyKeyboardRemove]]",
+              "required": false,
+              "description": "Additional interface options"
+            }
+          },
+          "returns": {
+            "type": "RequestResult",
+            "description": "Contains Message object on success"
+          },
+          "examples": [
+            {
+              "description": "Send document",
+              "code": "result = await client.messages.send_document(chat_id=123, document='path/to/file.pdf', caption='Important document')"
+            }
+          ]
+        }
+      }
+    },
+    "auth": {
+      "name": "Authentication",
+      "description": "Methods for user authentication and authorization",
+      "methods": {
+        "auth.signIn": {
+          "friendly_name": "sign_in",
+          "description": "Authenticate a user and issue access token",
+          "is_stub": true,
+          "parameters": {
+            "user_id": {
+              "type": "int",
+              "required": true,
+              "description": "User's Telegram user ID"
+            },
+            "username": {
+              "type": "Optional[str]",
+              "required": false,
+              "description": "User's Telegram username"
+            },
+            "additional_data": {
+              "type": "Optional[Dict[str, Any]]",
+              "required": false,
+              "description": "Additional user data"
+            }
+          },
+          "returns": {
+            "type": "RequestResult",
+            "description": "Contains authentication result including token"
+          },
+          "examples": [
+            {
+              "description": "Authenticate user",
+              "code": "result = await client.auth.sign_in(user_id=123456, username='john_doe')"
+            }
+          ]
+        }
+      }
+    },
+    "help": {
+      "name": "Help and Configuration",
+      "description": "Methods for help information and bot configuration",
+      "methods": {
+        "help.getConfig": {
+          "friendly_name": "get_config",
+          "description": "Get bot configuration and settings",
+          "is_stub": true,
+          "parameters": {},
+          "returns": {
+            "type": "RequestResult",
+            "description": "Contains configuration data"
+          },
+          "examples": [
+            {
+              "description": "Get bot configuration",
+              "code": "result = await client.help.get_config()"
+            }
+          ]
+        }
+      }
+    },
+    "users": {
+      "name": "User Operations",
+      "description": "Methods for user-related operations",
+      "methods": {
+        "getMe": {
+          "friendly_name": "get_me",
+          "description": "Get information about the bot",
+          "parameters": {},
+          "returns": {
+            "type": "RequestResult",
+            "description": "Contains User object with bot information"
+          },
+          "examples": [
+            {
+              "description": "Get bot info",
+              "code": "result = await client.users.get_me()"
+            }
+          ]
+        },
+        "getUserProfilePhotos": {
+          "friendly_name": "get_user_profile_photos",
+          "description": "Get a list of profile pictures for a user",
+          "parameters": {
+            "user_id": {
+              "type": "int",
+              "required": true,
+              "description": "Unique identifier of the target user"
+            },
+            "offset": {
+              "type": "int",
+              "required": false,
+              "description": "Number of photos to skip"
+            },
+            "limit": {
+              "type": "int",
+              "required": false,
+              "description": "Number of photos to return (1-100)"
+            }
+          },
+          "returns": {
+            "type": "RequestResult",
+            "description": "Contains UserProfilePhotos object"
+          },
+          "examples": [
+            {
+              "description": "Get user profile photos",
+              "code": "result = await client.users.get_user_profile_photos(user_id=123456)"
+            }
+          ]
+        },
+        "getChatMember": {
+          "friendly_name": "get_chat_member",
+          "description": "Get information about a member of a chat",
+          "parameters": {
+            "chat_id": {
+              "type": "Union[int, str]",
+              "required": true,
+              "description": "Unique identifier of the target chat"
+            },
+            "user_id": {
+              "type": "int",
+              "required": true,
+              "description": "Unique identifier of the target user"
+            }
+          },
+          "returns": {
+            "type": "RequestResult",
+            "description": "Contains ChatMember object"
+          },
+          "examples": [
+            {
+              "description": "Get chat member",
+              "code": "result = await client.users.get_chat_member(chat_id=123, user_id=456789)"
+            }
+          ]
+        }
+      }
+    },
+    "chats": {
+      "name": "Chat Operations",
+      "description": "Methods for chat-related operations",
+      "methods": {
+        "getChat": {
+          "friendly_name": "get_chat",
+          "description": "Get basic information about a chat",
+          "parameters": {
+            "chat_id": {
+              "type": "Union[int, str]",
+              "required": true,
+              "description": "Unique identifier of the target chat"
+            }
+          },
+          "returns": {
+            "type": "RequestResult",
+            "description": "Contains Chat object"
+          },
+          "examples": [
+            {
+              "description": "Get chat info",
+              "code": "result = await client.chats.get_chat(chat_id=123)"
+            }
+          ]
+        },
+        "getChatAdministrators": {
+          "friendly_name": "get_chat_administrators",
+          "description": "Get a list of administrators in a chat",
+          "parameters": {
+            "chat_id": {
+              "type": "Union[int, str]",
+              "required": true,
+              "description": "Unique identifier of the target chat"
+            }
+          },
+          "returns": {
+            "type": "RequestResult",
+            "description": "Contains list of ChatMember objects"
+          },
+          "examples": [
+            {
+              "description": "Get chat administrators",
+              "code": "result = await client.chats.get_chat_administrators(chat_id=123)"
+            }
+          ]
+        },
+        "getChatMemberCount": {
+          "friendly_name": "get_chat_member_count",
+          "description": "Get the number of members in a chat",
+          "parameters": {
+            "chat_id": {
+              "type": "Union[int, str]",
+              "required": true,
+              "description": "Unique identifier of the target chat"
+            }
+          },
+          "returns": {
+            "type": "RequestResult",
+            "description": "Contains member count (int)"
+          },
+          "examples": [
+            {
+              "description": "Get member count",
+              "code": "result = await client.chats.get_chat_member_count(chat_id=123)"
+            }
+          ]
+        }
+      }
+    },
+    "callback": {
+      "name": "Callback Operations",
+      "description": "Methods for callback query operations",
+      "methods": {
+        "answerCallbackQuery": {
+          "friendly_name": "answer_callback_query",
+          "description": "Send answer to callback query",
+          "parameters": {
+            "callback_query_id": {
+              "type": "str",
+              "required": true,
+              "description": "Unique identifier for the query to be answered"
+            },
+            "text": {
+              "type": "Optional[str]",
+              "required": false,
+              "description": "Text of the notification"
+            },
+            "show_alert": {
+              "type": "bool",
+              "required": false,
+              "description": "If true, an alert will be shown instead of a notification"
+            },
+            "url": {
+              "type": "Optional[str]",
+              "required": false,
+              "description": "URL that will be opened by the user's client"
+            },
+            "cache_time": {
+              "type": "Optional[int]",
+              "required": false,
+              "description": "Maximum amount of time in seconds that the result of the callback query may be cached"
+            }
+          },
+          "returns": {
+            "type": "RequestResult",
+            "description": "Success status"
+          },
+          "examples": [
+            {
+              "description": "Answer callback query",
+              "code": "result = await client.callback.answer_callback_query(callback_query_id='query123', text='Button clicked!')"
+            }
+          ]
+        }
+      }
+    },
+    "keyboards": {
+      "name": "Keyboard Operations",
+      "description": "Methods for creating and managing keyboards",
+      "methods": {
+        "InlineKeyboardMarkup": {
+          "friendly_name": "create_inline_keyboard",
+          "description": "Create an inline keyboard markup",
+          "parameters": {
+            "buttons": {
+              "type": "List[List[dict]]",
+              "required": true,
+              "description": "2D list of button definitions. Each button dict should contain: text, and one of: callback_data, url, switch_inline_query"
+            }
+          },
+          "returns": {
+            "type": "RequestResult",
+            "description": "Contains InlineKeyboardMarkup on success"
+          },
+          "examples": [
+            {
+              "description": "Create inline keyboard",
+              "code": "buttons = [[{'text': 'Option 1', 'callback_data': 'opt1'}, {'text': 'Option 2', 'callback_data': 'opt2'}]]\nresult = await client.keyboards.create_inline_keyboard(buttons)"
+            }
+          ]
+        },
+        "ReplyKeyboardMarkup": {
+          "friendly_name": "create_reply_keyboard",
+          "description": "Create a reply keyboard markup",
+          "parameters": {
+            "buttons": {
+              "type": "List[List[str]]",
+              "required": true,
+              "description": "2D list of button text"
+            },
+            "resize_keyboard": {
+              "type": "bool",
+              "required": false,
+              "description": "Resize keyboard vertically for optimal fit"
+            },
+            "one_time_keyboard": {
+              "type": "bool",
+              "required": false,
+              "description": "Hide keyboard after use"
+            },
+            "selective": {
+              "type": "bool",
+              "required": false,
+              "description": "Show keyboard only for mentioned users"
+            }
+          },
+          "returns": {
+            "type": "RequestResult",
+            "description": "Contains ReplyKeyboardMarkup on success"
+          },
+          "examples": [
+            {
+              "description": "Create reply keyboard",
+              "code": "buttons = [['Option A', 'Option B'], ['Cancel']]\nresult = await client.keyboards.create_reply_keyboard(buttons)"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "types": {
+    "ChatId": {
+      "description": "Union type for chat identifiers",
+      "types": ["int", "str"],
+      "usage": "Can be integer (user/channel ID) or string (@username)"
+    },
+    "MessageId": {
+      "description": "Message identifier",
+      "types": ["int"],
+      "usage": "Unique identifier for messages"
+    },
+    "UserId": {
+      "description": "User identifier",
+      "types": ["int"],
+      "usage": "Telegram user ID"
+    },
+    "ParseModeType": {
+      "description": "Parse mode for message formatting",
+      "types": ["enum"],
+      "values": ["MARKDOWN", "HTML", "NONE"],
+      "usage": "Controls how message text is parsed"
+    },
+    "RequestResult": {
+      "description": "Standard result wrapper for all API calls",
+      "properties": {
+        "success": {
+          "type": "bool",
+          "description": "Whether the request was successful"
+        },
+        "data": {
+          "type": "Any",
+          "description": "The result data on success"
+        },
+        "error": {
+          "type": "Optional[str]",
+          "description": "Error message on failure"
+        }
+      },
+      "usage": "All client methods return this type"
+    }
+  },
+  "quick_start": {
+    "title": "Quick Start Guide",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Import the client",
+        "code": "from nextvibe_bot.client import NextVibeClient"
+      },
+      {
+        "step": 2,
+        "title": "Initialize client",
+        "code": "client = NextVibeClient(token='your_bot_token')"
+      },
+      {
+        "step": 3,
+        "title": "Send your first message",
+        "code": "result = await client.messages.send_message(chat_id='@username', text='Hello from NextVibeBot!')"
+      }
+    ]
+  },
+  "best_practices": [
+    "Always check the success flag in RequestResult before using the data",
+    "Use appropriate parse_mode for formatted text (MARKDOWN or HTML)",
+    "Handle errors gracefully by checking the error field in RequestResult",
+    "Use inline keyboards for better user experience",
+    "Implement proper error handling for network issues",
+    "Respect rate limits by implementing delays between requests"
+  ]
+}

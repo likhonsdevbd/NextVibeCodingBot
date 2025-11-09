@@ -21,6 +21,8 @@ from .config import settings
 from .handlers.command_handlers import start_handler, help_handler, error_handler
 from .handlers.message_handler import message_handler_func as message_handler
 from .handlers import callback_handlers
+from .client import NextVibeClient
+from .method_mapping import get_method_summary
 
 
 class NextVibeBot:
@@ -29,6 +31,10 @@ class NextVibeBot:
     def __init__(self):
         self.application = None
         self.logger = self._setup_logging()
+        # Initialize NextVibe client for API operations
+        self.client = None
+        # Method mapping info for logging
+        self.method_info = get_method_summary()
         
     def _setup_logging(self) -> logging.Logger:
         """Setup logging configuration"""
@@ -69,6 +75,15 @@ class NextVibeBot:
             .token(settings.telegram_bot_token)
             .build()
         )
+        
+        # Initialize NextVibe client for API operations
+        self.client = NextVibeClient(
+            token=settings.telegram_bot_token,
+            application=self.application
+        )
+        
+        # Log method mapping info
+        self.logger.info(f"Initialized with {self.method_info['total_methods']} methods across {len(self.method_info['modules'])} modules")
         
         # Add handlers
         self._add_handlers()
